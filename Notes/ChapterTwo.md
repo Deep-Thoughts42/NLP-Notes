@@ -1,7 +1,7 @@
-# Regular Expressions, Text Normalization, Edit Distance
+# Regular Expressions, Text Normalization, Edit Distance (2)
 In these notes, some sections will be ignored in the event of lack of personal relevance. 
 ## Table of Contents
-- [Regular Expressions, Text Normalization, Edit Distance](#regular-expressions-text-normalization-edit-distance)
+- [Regular Expressions, Text Normalization, Edit Distance (2)](#regular-expressions-text-normalization-edit-distance-2)
   - [Table of Contents](#table-of-contents)
   - [Regex in Python](#regex-in-python)
   - [Regular Expressions (2.1)](#regular-expressions-21)
@@ -12,6 +12,8 @@ In these notes, some sections will be ignored in the event of lack of personal r
   - [Words (2.2)](#words-22)
     - [Key Definitions](#key-definitions)
   - [Corpora (2.3)](#corpora-23)
+  - [Text Normalization (2.4)](#text-normalization-24)
+  - [Minimum Edit Distance (2.5)](#minimum-edit-distance-25)
 
 ---
 ## Regex in Python
@@ -104,3 +106,41 @@ $$
 
 ## Corpora (2.3)
 
+An issue found in NLP algorithms recently is a lack of non-English development and testing. Some algorithms only work for English and are less relevant for others, which can create a power imbalance of sorts amongst languages. 
+
+To better document a corpus and to ensure its use is relevant, it can be valuable for the corpus creator to create a datasheet outlining information regarding the datset such as motivation, demographics, and other stats. 
+
+## Text Normalization (2.4)
+
+Text normalization involves three common steps
+- Tokenizing words
+- Normalizing word formats
+- Segmenting sentences
+
+
+Tokenizing words involves segmenting text into the words. In python, `nltk` has a good library for this task. Word tokenization can also involve expanding contractions.
+
+> As a general note, NLP algorithms learn facts about language from one corpus (a training corpus) to make decisions about a separate (test) corpus. 
+
+To deal with inconsistencies as a result of subwords, additional morphemes, or other factors, standardization is important in text. `Byte-pair encoding` can learn frequent pairs with additional morphemes and the system can learn to account for words such as *newer* being present on the test corpus but only *new* on the training corpus. 
+
+**Word normalization** is the task of putting words/tokens in a standard format, like choosing a single form of a word or accounting for regional variants. **Case folding** matches the case to lower for example, generalizing capitalized and uncapitalized words. 
+
+**Lemmatization** is used to find and match words with the same roots, which can be used to simplify processing. Challenges in this process include accounting for **affixes** or additional meanings of words. 
+
+---
+
+## Minimum Edit Distance (2.5)
+
+A large part of NLP involves determining how similar two strings are. This could be in regard to finding synonyms or spellchecking for example.  **Coreference** is the task of deciding whether two strings refer to the same entity. 
+
+```
+Stanford President Marc Tessier-Lavigne
+Stanford University President Marc Tessier-Lavigne
+```
+
+The strings above only differ by one word whichc ould be a piece of evidence for identifying coreference. **Edit distance** is a way to quantify this intuition. **Minimum edit distance** is defined as the minimum number of editing operations needed to transform one string into another. 
+
+![Alignment between two words](../Images/alignmentnote.png)
+
+A weight or cost can be assigned to each of these operations, known as the Levenshtein distance. The distance between "intention" and "execution" is 5 as shown by the image above. This minimum edit distance can be computed using dynamic programming.
